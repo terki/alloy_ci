@@ -63,7 +63,10 @@ defmodule AlloyCi.Projects do
 
   @spec create_project(nil | keyword() | map(), User.t()) :: any()
   def create_project(params, user) do
-    installation_id = @github_api.installation_id_for(Accounts.github_auth(user).uid)
+    installation_id =
+      @github_api.installation_id_for(
+        System.get_env("GITHUB_TARGET_UID") || Accounts.github_auth(user).uid
+      )
 
     with true <- Accounts.installed_on_owner?(params["owner_id"]),
          %{"content" => _} <-

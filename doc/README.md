@@ -142,6 +142,7 @@ The required variables are as follows:
 | GITHUB_CLIENT_ID           | OAuth Client ID of your GitHub App               |
 | GITHUB_ENTERPRISE          | If the GitHub endpoint in use is an Enterprise installation, set to true, **otherwise don't add this** |
 | GITHUB_ENDPOINT            | The GitHub endpoint URL, e.g https://github.example.com (only needed for GitHub Enterprise) |
+| GITHUB_TARGET_UID          | The GitHub UID where app is privately installed  |
 | GITHUB_CLIENT_SECRET       | OAuth Client Secret of your GitHub App           |
 | GITHUB_APP_ID              | The ID of the App created before        |
 | GITHUB_APP_URL             | The URL where users can add the App to their accounts |
