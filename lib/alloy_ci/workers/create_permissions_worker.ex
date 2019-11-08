@@ -7,6 +7,7 @@ defmodule AlloyCi.Workers.CreatePermissionsWorker do
   """
   alias AlloyCi.{ProjectPermission, Repo}
   import AlloyCi.ProjectPermission, only: [repo_ids: 0]
+  import Ecto.Query
 
   @github_api Application.get_env(:alloy_ci, :github_api)
 
@@ -21,12 +22,12 @@ defmodule AlloyCi.Workers.CreatePermissionsWorker do
 
     Repo.transaction(fn ->
       Enum.each(permission_ids, fn id ->
-        project_id = Repo.get_by(ProjectPermission, repo_id: id).project_id
+        project_id = Repo.one(from p in ProjectPermission, where: p.repo_id == ^..id, limit: 1).project_id
         params = %{user_id: user_id, project_id: project_id, repo_id: id}
 
         %ProjectPermission{}
         |> ProjectPermission.changeset(params)
-        |> Repo.insert()
+        |> Repo.insert(on_conflict: :nothing)
       end)
     end)
   end
