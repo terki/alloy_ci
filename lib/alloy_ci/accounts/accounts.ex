@@ -90,6 +90,8 @@ defmodule AlloyCi.Accounts do
         {:error, reason}
 
       authentication ->
+        # refresh permissions on login
+        process_auth(authentication)
         if authentication.expires_at && authentication.expires_at < Timex.now() do
           replace_authentication(authentication, auth, current_user)
         else
