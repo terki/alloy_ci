@@ -22,7 +22,7 @@ defmodule AlloyCi.Workers.CreatePermissionsWorker do
 
     Repo.transaction(fn ->
       Enum.each(permission_ids, fn id ->
-        project_id = Repo.one(from p in ProjectPermission, where: p.repo_id == ^..id, limit: 1).project_id
+        project_id = Repo.one(from p in ProjectPermission, where: p.repo_id == ^id, limit: 1).project_id
         params = %{user_id: user_id, project_id: project_id, repo_id: id}
 
         %ProjectPermission{}
